@@ -34,6 +34,7 @@
 * Notifictions
 * Save Contacts
 * QR Code Payment
+* Account Summary
 
 
 
