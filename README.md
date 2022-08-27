@@ -33,6 +33,7 @@
 * Error Handling
 * Notifictions
 * Save Contacts
+* QR Code Payment
 
 
 
