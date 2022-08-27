@@ -31,6 +31,7 @@
 * Social Authentication
 * Confirm Transaction With OTP
 * Error Handling
+* Notifictions
 
 
 
