@@ -26,6 +26,8 @@ class _TransactionConfirmScreenState extends State<TransactionConfirmScreen> {
   final TransactionServices transactionServices = TransactionServices();
   final UserServices userServices = UserServices();
 
+  bool isLoading = false;
+
   User? user;
 
   Transaction? transaction;
@@ -48,6 +50,9 @@ class _TransactionConfirmScreenState extends State<TransactionConfirmScreen> {
   }
 
   sendMoney() async {
+    setState(() {
+      isLoading = true;
+    });
     transaction = await transactionServices.transferMoney(
       context: context,
       sender: widget.arguments!['myPayId'],
@@ -55,6 +60,9 @@ class _TransactionConfirmScreenState extends State<TransactionConfirmScreen> {
       amount: widget.arguments!['amount'],
     );
     navigateToTransactionComplete();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -92,6 +100,7 @@ class _TransactionConfirmScreenState extends State<TransactionConfirmScreen> {
                     vertical: 20,
                   ),
                   child: CustomButton(
+                    isLoading: isLoading,
                     text: "Confirm Pay",
                     onTap: sendMoney,
                   ),

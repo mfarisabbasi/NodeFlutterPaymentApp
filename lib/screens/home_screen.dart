@@ -2,11 +2,9 @@ import 'package:banking_app/common/constants/global.dart';
 import 'package:banking_app/common/widgets/custom_appbar.dart';
 import 'package:banking_app/common/widgets/custom_heading.dart';
 import 'package:banking_app/common/widgets/custom_loader.dart';
-
 import 'package:banking_app/common/widgets/home_screen/account_details_card.dart';
 import 'package:banking_app/common/widgets/home_screen/recent_transactions.dart';
 import 'package:banking_app/models/transaction_model.dart';
-
 import 'package:banking_app/providers/user_provider.dart';
 import 'package:banking_app/services/auth_services.dart';
 import 'package:banking_app/services/transaction_services.dart';
@@ -50,7 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
           : Column(
               children: [
                 const AccountDetailsCard(
-                  outerPadding: EdgeInsets.all(10),
+                  outerPadding: EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 10,
+                  ),
                   color1: GlobalVariables.primaryColor,
                   color2: GlobalVariables.secondaryColor,
                   borderRadius: 20,

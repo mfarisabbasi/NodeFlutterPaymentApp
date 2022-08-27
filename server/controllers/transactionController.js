@@ -14,13 +14,11 @@ const createTransaction = asyncHandler(async (req, res) => {
 
     const receivedBy = await User.findOne({ payID: receiver });
 
-    if (!sendBy) {
-      return res.status(400).json({ msg: "Sender Not Found" });
-    }
+    if (sender === receiver) return res.status(400).json({ msg: "Error" });
 
-    if (!receivedBy) {
-      return res.status(400).json({ msg: "Receiver Not Found" });
-    }
+    if (!sendBy) return res.status(400).json({ msg: "Sender Not Found" });
+
+    if (!receivedBy) return res.status(400).json({ msg: "Receiver Not Found" });
 
     var uniqueId = OrderID("long");
 

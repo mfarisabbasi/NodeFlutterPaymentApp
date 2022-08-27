@@ -6,6 +6,7 @@ class CustomButton extends StatelessWidget {
   final Color? color;
   final double? width;
   final double? height;
+  final bool? isLoading;
 
   const CustomButton({
     Key? key,
@@ -14,6 +15,7 @@ class CustomButton extends StatelessWidget {
     this.color,
     this.width,
     this.height,
+    this.isLoading,
   }) : super(key: key);
 
   @override
@@ -27,12 +29,16 @@ class CustomButton extends StatelessWidget {
         ),
         primary: color,
       ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: Colors.white,
-        ),
-      ),
+      child: isLoading == true
+          ? const CircularProgressIndicator(
+              color: Colors.white,
+            )
+          : Text(
+              text,
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
     );
   }
 }
