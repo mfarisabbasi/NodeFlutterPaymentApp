@@ -17,6 +17,16 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
   final TextEditingController _payIdController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
 
+  final List<dynamic> _users = [
+    'Faris',
+    'Nadir',
+    'Shariq',
+    'Atif',
+    'Faris',
+    'Nadir',
+    'Shariq',
+    'Atif',
+  ];
   void navigateToTransactionConfirmScreen(
       String query, double amount, String myPayId) {
     Navigator.pushNamed(
@@ -40,6 +50,64 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 20,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text("Saved Contacts"),
+                Text("Add New"),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 100,
+            child: ListView.builder(
+              itemCount: _users.length,
+              scrollDirection: Axis.horizontal,
+              itemExtent: 80,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () => {},
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.network(
+                              "https://cdn-icons-png.flaticon.com/512/2202/2202112.png"),
+                        ),
+                      ),
+                      Text(
+                        _users[index],
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [
+                Text("View all"),
+              ],
+            ),
+          ),
           const Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 20,

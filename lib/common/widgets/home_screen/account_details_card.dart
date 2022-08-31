@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:banking_app/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AccountDetailsCard extends StatelessWidget {
@@ -27,6 +28,7 @@ class AccountDetailsCard extends StatelessWidget {
   final IconData row3Icon;
   final Color? row3IconColor;
   final String row4Text;
+  final String textToCopy;
   const AccountDetailsCard({
     Key? key,
     required this.color1,
@@ -51,6 +53,7 @@ class AccountDetailsCard extends StatelessWidget {
     this.row3TextColor,
     this.row3TextSize,
     this.row3IconColor,
+    required this.textToCopy,
   }) : super(key: key);
 
   @override
@@ -84,7 +87,7 @@ class AccountDetailsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    user.name,
+                    row1Text,
                     style: TextStyle(
                       color: row1TextColor ?? Colors.white,
                       fontSize: row1TextSize ?? 20,
@@ -106,7 +109,7 @@ class AccountDetailsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "$row2Heading: Rs ${user.userBalance}",
+                    "$row2Heading: Rs $row2Text",
                     style: TextStyle(
                       color: row2TextColor ?? Colors.white,
                       fontSize: row2TextSize ?? 20,
@@ -134,9 +137,16 @@ class AccountDetailsCard extends StatelessWidget {
                       fontSize: row3TextSize ?? 20,
                     ),
                   ),
-                  Icon(
-                    row3Icon,
-                    color: row3IconColor ?? Colors.white,
+                  GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(
+                        ClipboardData(text: textToCopy),
+                      );
+                    },
+                    child: Icon(
+                      row3Icon,
+                      color: row3IconColor ?? Colors.white,
+                    ),
                   )
                 ],
               ),

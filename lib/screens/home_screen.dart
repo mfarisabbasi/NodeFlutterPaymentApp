@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    authService.getUserData(context: context);
     fetchmyTransactions();
   }
 
@@ -47,8 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ? const CustomLoader()
           : Column(
               children: [
-                const AccountDetailsCard(
-                  outerPadding: EdgeInsets.symmetric(
+                AccountDetailsCard(
+                  outerPadding: const EdgeInsets.symmetric(
                     horizontal: 15,
                     vertical: 10,
                   ),
@@ -57,13 +58,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: 20,
                   height: 250,
                   width: double.infinity,
-                  row1Text: "Faris Abbasi",
+                  row1Text: user.name,
                   row1Icon: Icons.verified,
                   row2Heading: "Balance",
-                  row2Text: "62,000",
+                  row2Text: user.userBalance.toString(),
                   row3Text: "PAYREAL-305738289691",
                   row3Icon: Icons.copy_sharp,
                   row4Text: "Upgrade Account",
+                  textToCopy: user.payID,
                 ),
                 const CustomHeading(
                   paddingHorizontal: 20,

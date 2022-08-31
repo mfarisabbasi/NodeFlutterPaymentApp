@@ -109,4 +109,80 @@ const isTokenValid = asyncHandler(async (req, res) => {
   }
 });
 
-export { createUser, loginUser, getUserData, isTokenValid, searchUsersByPayID };
+// @desc Save a contact for later use
+// @route PATCH /api/users/save-contact
+// @access Private
+const saveContact = asyncHandler(async (req, res) => {
+  try {
+    const { contactToSave, name } = req.body;
+
+    const contactToSaveExists = await User.find({ payID: contactToSave });
+
+    if (!contactToSave || !contactToSaveExists)
+      return res.status(400).json({ msg: "Error Contact Not Found" });
+
+    if (!name) return res.status(400).json({ msg: "Name is required" });
+
+    const currentUser = await User.findById(req.user);
+
+    let getCurrentUserSavedContacts = currentUser.saved;
+
+    if (getCurrentUserSavedContacts) {
+      for (let a = 0; a < getCurrentUserSavedContacts.length; a++) {
+        if (getCurrentUserSavedContacts[a].savedPayId === contactToSave) {
+          return res.status(400).json({ msg: "Contact Already Saved" });
+        }
+      }
+
+      currentUser.saved.push({
+        savedName: name,
+        savedPayId: contactToSave,
+      });
+      await currentUser.save();
+    }
+
+    return res.status(200).json(currentUser);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// @desc Get Logged In User Saved Contacts
+// @route GET /api/users/saved-contacts
+// @access Private
+const getCurrentUserSavedContacts = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user);
+  res.json(user.saved);
+});
+
+// @desc Remove Contact From User Saved Contacts
+// @route PUT /api/users/saved-contacts/:id
+// @access Private
+const deleteUserSavedContact = asyncHandler(async (req, res) => {
+  const currentUser = await User.findById(req.user);
+
+  if (currentUser.saved) {
+    for (let a = 0; a < currentUser.saved.length; a++) {
+      if (currentUser.saved[a]._id == req.params.id) {
+        let removedItem = currentUser.saved.splice(a, 1);
+        if (removedItem) {
+          await currentUser.save();
+        }
+      } else {
+        return res.status(200).json({ msg: "Contact Not Found" });
+      }
+    }
+  }
+  return res.status(200).json({ msg: "Contact Removed" });
+});
+
+export {
+  createUser,
+  loginUser,
+  getUserData,
+  isTokenValid,
+  searchUsersByPayID,
+  saveContact,
+  getCurrentUserSavedContacts,
+  deleteUserSavedContact,
+};

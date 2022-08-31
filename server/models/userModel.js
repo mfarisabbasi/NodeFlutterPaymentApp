@@ -46,6 +46,18 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    saved: [
+      {
+        savedName: {
+          type: String,
+          required: true,
+        },
+        savedPayId: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
