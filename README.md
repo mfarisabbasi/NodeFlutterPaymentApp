@@ -35,6 +35,7 @@
 * Save Contacts
 * QR Code Payment
 * Account Summary
+* Dark Mode
 
 
 
